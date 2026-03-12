@@ -2,7 +2,7 @@
 
 **xsh** is a lightweight developer utility CLI for **Linux** and **macOS** that provides a unified interface for common system, networking, and infrastructure tasks.
 
-Instead of remembering dozens of commands across different tools, **xsh** provides a single command interface for everyday developer and sysadmin workflows.
+Instead of remembering dozens of different commands across many tools, **xsh** provides a simple command interface for everyday developer and sysadmin workflows.
 
 ---
 
@@ -37,7 +37,7 @@ xsh install <package>
 xsh update all
 xsh setup all
 
-Basically, instead of fumbling with 10s and hundreds of commands installing more and more packages and everything constantly, just simply run xsh's package management commands and everything gets installed or updated.
+Instead of juggling dozens of commands across different package managers and utilities, **xsh** simplifies common setup and update tasks into a few straightforward commands.
 
 ### Networking
 
@@ -63,7 +63,7 @@ Check DNS records:
 
 xsh dns example.com
 
-Trace network route:
+Trace a network route:
 
 xsh trace example.com
 
@@ -86,7 +86,7 @@ It aims to be a **Swiss-army knife CLI** for developers, homelabs, and system ad
 
 xsh is open source and community contributions are welcome.
 
-Ideas for contributions:
+Ideas for contributions include:
 
 - new commands
 - platform support improvements
