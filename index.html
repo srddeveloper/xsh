@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XSH — Developer Utility CLI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #09090b;
+      --surface: #111113;
+      --border: #1c1c22;
+      --border-hover: #2a2a33;
+      --text: #ededef;
+      --text-2: #a0a0ab;
+      --text-3: #63637a;
+      --radius: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Geist', -apple-system, sans-serif;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 80px 24px 100px;
+    }
+
+    .header { margin-bottom: 56px; }
+
+    .name {
+      font-family: 'Geist Mono', monospace;
+      font-size: 32px;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+
+    .desc {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    .label {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      color: var(--text-3);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 10px;
+    }
+
+    .install-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 48px;
+      transition: border-color 0.2s;
+    }
+
+    .install-box:hover { border-color: var(--border-hover); }
+
+    .install-cmd {
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px;
+      color: var(--text-2);
+      overflow-x: auto;
+      white-space: nowrap;
+      flex: 1;
+      scrollbar-width: none;
+    }
+
+    .install-cmd::-webkit-scrollbar { display: none; }
+    .install-cmd .ch { color: var(--text-3); margin-right: 8px; }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-3);
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      padding: 5px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .copy-btn:hover { color: var(--text); border-color: var(--border-hover); }
+    .copy-btn.copied { color: #22c55e; border-color: #22c55e44; }
+
+    .commands { margin-bottom: 48px; }
+
+    .cmd-row {
+      display: flex;
+      align-items: baseline;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 20px;
+    }
+
+    .cmd-row:last-child { border-bottom: none; }
+
+    .cmd-name {
+      font-family: 'Geist Mono', monospace;
+      font-size: 13px;
+      color: var(--text);
+      min-width: 200px;
+      flex-shrink: 0;
+    }
+
+    .cmd-name .arg { color: var(--text-3); }
+
+    .cmd-desc {
+      font-size: 13px;
+      color: var(--text-3);
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--text-3);
+      line-height: 1.6;
+    }
+
+    .note code {
+      font-family: 'Geist Mono', monospace;
+      font-size: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--text-2);
+    }
+
+    .note a {
+      color: var(--text-2);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .note a:hover { color: var(--text); border-color: var(--text-3); }
+
+    @media (max-width: 600px) {
+      .wrapper { padding: 48px 20px 64px; }
+      .name { font-size: 26px; }
+      .cmd-row { flex-direction: column; gap: 2px; }
+      .cmd-name { min-width: unset; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <header class="header">
+      <h1 class="name">xsh</h1>
+      <p class="desc">A lightweight utility CLI for Linux and macOS. Package management, port scanning, DNS, WHOIS, and traceroute in one tool.</p>
+    </header>
+
+    <section>
+      <div class="label">Install</div>
+      <div class="install-box">
+        <code class="install-cmd"><span class="ch">$</span>curl -fsSL https://raw.githubusercontent.com/srddeveloper/xsh/refs/heads/main/source -o /usr/local/bin/xsh && chmod +x /usr/local/bin/xsh</code>
+        <button class="copy-btn" id="copyBtn" onclick="copyCmd()">Copy</button>
+      </div>
+    </section>
+
+    <section class="commands">
+      <div class="label">Commands</div>
+      <div class="cmd-row">
+        <span class="cmd-name">help</span>
+        <span class="cmd-desc">Show the help menu</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">install <span class="arg">&lt;package&gt;</span></span>
+        <span class="cmd-desc">Install a package</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">update all</span>
+        <span class="cmd-desc">Update all packages</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">setup all</span>
+        <span class="cmd-desc">Install all basic system packages</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">scan <span class="arg">&lt;ip&gt;</span></span>
+        <span class="cmd-desc">Scan common ports with banners</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">port <span class="arg">&lt;ip&gt; &lt;port&gt;</span></span>
+        <span class="cmd-desc">Test a specific port with banner</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">dns <span class="arg">&lt;host&gt;</span></span>
+        <span class="cmd-desc">DNS lookup</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">whois <span class="arg">&lt;host&gt;</span></span>
+        <span class="cmd-desc">WHOIS lookup</span>
+      </div>
+      <div class="cmd-row">
+        <span class="cmd-name">trace <span class="arg">&lt;host&gt;</span></span>
+        <span class="cmd-desc">Traceroute</span>
+      </div>
+    </section>
+
+    <p class="note">
+      Requires <code>sudo</code> on some systems. Installs to <code>/usr/local/bin</code>.<br>
+      Source on <a href="https://github.com/srddeveloper/xsh">GitHub</a>.
+    </p>
+  </div>
+
+  <script>
+    function copyCmd() {
+      const cmd = 'curl -fsSL https://raw.githubusercontent.com/srddeveloper/xsh/refs/heads/main/source -o /usr/local/bin/xsh && chmod +x /usr/local/bin/xsh';
+      navigator.clipboard.writeText(cmd).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
