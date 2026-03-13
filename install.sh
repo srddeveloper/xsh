@@ -8,6 +8,8 @@ set -euo pipefail
 # ───────────────────────────────────────────────────────────
 
 REPO_RAW="https://raw.githubusercontent.com/srddeveloper/xsh/refs/heads/main"
+# Fallback URL in case the refs/heads path changes
+REPO_RAW_ALT="https://raw.githubusercontent.com/srddeveloper/xsh/main"
 SOURCE_URL="${REPO_RAW}/source"
 INSTALL_DIR="/usr/local/bin"
 BIN_NAME="xsh"
@@ -53,7 +55,13 @@ info "Using compiler: $CXX"
 # ── download ───────────────────────────────────────────────
 SRC_FILE="${TMP_DIR}/xsh.cpp"
 info "Downloading source from GitHub..."
-curl -fsSL "$SOURCE_URL" -o "$SRC_FILE" || fail "Failed to download source."
+if curl -fsSL "${REPO_RAW}/source" -o "$SRC_FILE" 2>/dev/null; then
+    :
+elif curl -fsSL "${REPO_RAW_ALT}/source" -o "$SRC_FILE" 2>/dev/null; then
+    :
+else
+    fail "Failed to download source."
+fi
 ok "Source downloaded."
 
 # ── compile ────────────────────────────────────────────────
