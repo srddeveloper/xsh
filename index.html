@@ -456,7 +456,7 @@
 
   <script>
     function copyCmd() {
-      const cmd = 'curl -fsSL https://raw.githubusercontent.com/srddeveloper/xsh/refs/heads/main/source -o /usr/local/bin/xsh && chmod +x /usr/local/bin/xsh';
+      const cmd = 'sudo curl -fsSL https://raw.githubusercontent.com/srddeveloper/xsh/refs/heads/main/install.sh -o /usr/local/bin/xsh && sudo chmod +x /usr/local/bin/xsh';
       navigator.clipboard.writeText(cmd).then(() => {
         const btn = document.getElementById('copyBtn');
         btn.textContent = 'Copied';
